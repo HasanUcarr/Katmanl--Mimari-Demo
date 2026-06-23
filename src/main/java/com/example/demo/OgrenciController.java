@@ -1,8 +1,8 @@
 package com.example.demo;
 
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -14,11 +14,10 @@ public class OgrenciController {
     public OgrenciController(OgrenciService ogrenciService) {
         this.ogrenciService = ogrenciService;
     }
-
     // HTTP POST isteği. Veritabanına yeni kayıt eklemek için kullanılır.
     // @RequestBody: Dışarıdan gelen JSON verisini Java 'Ogrenci' nesnesine dönüştürür.
     @PostMapping
-    public OgrenciDto kayitOlustur(@RequestBody OgrenciDto ogrenciDto) {
+    public OgrenciDto kayitOlustur(@Valid @RequestBody OgrenciDto ogrenciDto) {
         return ogrenciService.ogrenciKaydet(ogrenciDto);
     }
 
@@ -29,7 +28,7 @@ public class OgrenciController {
     }
 
     @PutMapping("/{id}")
-    public OgrenciDto Guncelle(@PathVariable Long id, @RequestBody OgrenciDto guncelOgrenciDto) {
+    public OgrenciDto Guncelle(@PathVariable Long id, @Valid @RequestBody OgrenciDto guncelOgrenciDto) {
         return ogrenciService.ogrenciGuncelle(id, guncelOgrenciDto);
     }
 
