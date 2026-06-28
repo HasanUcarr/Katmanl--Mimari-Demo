@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.List;
+import java.util.ArrayList;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -13,6 +15,8 @@ public class OgrenciDto {
 
     @NotBlank(message = "Bölüm bilgisi boş bırakılamaz!")
     private String bolum;
+
+    private List<DersDto> dersler = new ArrayList<>();
 
     public OgrenciDto(){
     }
@@ -34,4 +38,6 @@ public class OgrenciDto {
     public void setBolum(String bolum){
         this.bolum = bolum;
     }
+    public List<DersDto> getDersler(){return dersler;}
+    public void setDersler(List<DersDto> dersler){this.dersler = dersler;}
 }
