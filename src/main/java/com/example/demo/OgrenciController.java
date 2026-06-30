@@ -1,12 +1,12 @@
 package com.example.demo;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import jakarta.validation.Valid;
 
-
 @RestController
-@RequestMapping("/api/ogrenciler") // Bu controller altındaki tüm uç noktalar bu adresten başlar.
+@RequestMapping("/api/ogrenciler")
 public class OgrenciController {
 
     private final OgrenciService ogrenciService;
@@ -14,14 +14,12 @@ public class OgrenciController {
     public OgrenciController(OgrenciService ogrenciService) {
         this.ogrenciService = ogrenciService;
     }
-    // HTTP POST isteği. Veritabanına yeni kayıt eklemek için kullanılır.
-    // @RequestBody: Dışarıdan gelen JSON verisini Java 'Ogrenci' nesnesine dönüştürür.
+
     @PostMapping
     public OgrenciDto kayitOlustur(@Valid @RequestBody OgrenciDto ogrenciDto) {
         return ogrenciService.ogrenciKaydet(ogrenciDto);
     }
 
-    // HTTP GET isteği. Veritabanındaki kayıtları okumak için kullanılır.
     @GetMapping
     public List<OgrenciDto> listele() {
         return ogrenciService.tumOgrencileriGetir();
@@ -33,7 +31,8 @@ public class OgrenciController {
     }
 
     @DeleteMapping("/{id}")
-    public void sil(@PathVariable Long id){
+    public ResponseEntity<Void> sil(@PathVariable Long id){
         ogrenciService.ogrenciSil(id);
+        return ResponseEntity.noContent().build(); 
     }
 }
